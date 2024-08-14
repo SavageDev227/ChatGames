@@ -1,0 +1,6 @@
+name: Savage's Chat Games
+version: '${project.version}'
+main: com.savage.chatgames.Savage_sChatGames
+api-version: '1.20'
+authors: [SavageDev]
+description: A fun system of chat-based games to help with player engagement.

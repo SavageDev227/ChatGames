@@ -1,11 +1,11 @@
-package com.savage.chatgames.utils;
+package com.savage.chatgames.games.taskTimers;
 
 import com.savage.chatgames.ChatGames;
 import com.savage.chatgames.games.Scramble;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
-public class TaskTimers {
+public class ScrambleTaskTimers {
 
     public Integer taskId1;
     public Integer taskId2;

@@ -1,6 +1,13 @@
-name: Savage's Chat Games
+name: SavagesChatGames
 version: '${project.version}'
-main: com.savage.chatgames.Savage_sChatGames
+main: com.savage.chatgames.ChatGames
 api-version: '1.20'
 authors: [SavageDev]
-description: A fun system of chat-based games to help with player engagement.
+description: A fun system of chat-based games to help with player engagement
+commands:
+  scramble:
+    description: Interacts with the scramble game
+    aliases: scrbl
+  reloadchatgames:
+    description: reloads the command
+    permission: scramble.reload

@@ -26,22 +26,32 @@ public class ScrambleCommand implements CommandExecutor {
             if(sender instanceof Player) {
                 Player p = (Player) sender;
                 // check if answer is correct
-                if (args.length == 2 && args[0].equals("answer") && args[1].equals(scramble.lastScrambledWord)) {
-                    if(scramble.answerSubmitted) {
+                if (args.length == 2 && args[0].equals("answer")) {
+                    if (args[1] == null) {
+                        p.sendMessage(ColorUtils.translateColorCodes("&cWrong syntax!"));
+                        return true;
+                    }
+                    if (scramble.answerSubmitted) {
                         p.sendMessage(ColorUtils.translateColorCodes("&cThe answer has already been submitted!\n&bPlease wait for the next puzzle!"));
-                    } else {
+                        return true;
+                    }
+                    if (args[1].equalsIgnoreCase(scramble.lastScrambledWord)) {
                         rewards.giveReward(p, scramble.lastScrambledWord);
-                        scramble.answerSubmitted = true;
+                        scramble.setAnswerSubmitted(true);
                         String unscrambleAnnouncement = config.getString("scramble-answer");
                         String scramblePrefix = config.getString("announcement-prefix");
 
                         // Replace placeholders with actual values
-                        unscrambleAnnouncement = unscrambleAnnouncement.replace("%scramble-prefix%", scramblePrefix);
-                        unscrambleAnnouncement = unscrambleAnnouncement.replace("%unscrambled-word%", scramble.lastScrambledWord);
-                        unscrambleAnnouncement = unscrambleAnnouncement.replace("%player%", p.getName());
+                        if (unscrambleAnnouncement != null) {
+                            unscrambleAnnouncement = unscrambleAnnouncement.replace("%scramble-prefix%", scramblePrefix != null ? scramblePrefix : "");
+                            unscrambleAnnouncement = unscrambleAnnouncement.replace("%unscrambled-word%", scramble.lastScrambledWord);
+                            unscrambleAnnouncement = unscrambleAnnouncement.replace("%player%", p.getName());
 
-                        // Broadcast the message
-                        Bukkit.broadcastMessage(ColorUtils.translateColorCodes(unscrambleAnnouncement));
+                            // Broadcast the message
+                            Bukkit.broadcastMessage(ColorUtils.translateColorCodes(unscrambleAnnouncement));
+                        }
+                    } else {
+                        p.sendMessage(ColorUtils.translateColorCodes("&cWrong answer! Try again."));
                     }
                     return true;
                 } else if (args.length == 1 && args[0].equals("start") && p.hasPermission("scramble.staff")) {

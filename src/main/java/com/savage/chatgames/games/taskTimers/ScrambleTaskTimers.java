@@ -17,6 +17,8 @@ public class ScrambleTaskTimers {
 
     public void startCountdownOne() {
         taskId1 = Bukkit.getScheduler().scheduleSyncRepeatingTask(ChatGames.getPlugin(), new Runnable() {
+
+            // Time in seconds in between each scramble
             int time = 600;
             @Override
             public void run() {

@@ -3,6 +3,7 @@ package com.savage.chatgames;
 import com.savage.chatgames.commands.ReloadCommand;
 import com.savage.chatgames.commands.ScrambleCommand;
 import com.savage.chatgames.commands.tabCompleter.ScrambleCommandTabCompleter;
+import com.savage.chatgames.games.Scramble;
 import com.savage.chatgames.utils.ColorUtils;
 import com.savage.chatgames.games.taskTimers.ScrambleTaskTimers;
 import org.bukkit.Bukkit;
@@ -29,22 +30,6 @@ public final class ChatGames extends JavaPlugin {
         // Plugin startup logic
         plugin = this;
 
-        //Server version compatibility check
-        if (!(Bukkit.getServer().getVersion().contains("1.20"))) {
-            log.warning(ColorUtils.translateColorCodes("&4-------------------------------------------"));
-            log.warning(ColorUtils.translateColorCodes("&6ChatGames: &4This plugin is only supported on the Minecraft versions listed below:"));
-            log.warning(ColorUtils.translateColorCodes("&6ChatGames: &41.20.x"));
-            log.warning(ColorUtils.translateColorCodes("&6ChatGames: &4Is now disabling!"));
-            log.warning(ColorUtils.translateColorCodes("&4-------------------------------------------"));
-            Bukkit.getPluginManager().disablePlugin(this);
-            return;
-        } else {
-            log.info(ColorUtils.translateColorCodes("&a-------------------------------------------"));
-            log.info(ColorUtils.translateColorCodes("&6ChatGames: &aA supported Minecraft version has been detected"));
-            log.info(ColorUtils.translateColorCodes("&6ChatGames: &6Continuing plugin startup"));
-            log.info(ColorUtils.translateColorCodes("&a-------------------------------------------"));
-        }
-
         // Load the configuration
         getConfig().options().copyDefaults(true);
         saveConfig();
@@ -53,6 +38,7 @@ public final class ChatGames extends JavaPlugin {
         scrambleTaskTimers = new ScrambleTaskTimers();
 
         getCommand("scramble").setExecutor(new ScrambleCommand());
+        getCommand("scramble").setTabCompleter(new ScrambleCommandTabCompleter());
 
         // Plugin startup message
         log.info(ColorUtils.translateColorCodes("-------------------------------------------"));

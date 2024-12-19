@@ -24,7 +24,6 @@ public class Scramble extends GameSystem {
 
     public String lastScrambledWord;
     List<String> wordsToScramble = plugin.getConfig().getStringList("words-to-scramble");
-
     FileConfiguration config = ChatGames.getPlugin().getConfig();
 
 
@@ -86,4 +85,11 @@ public class Scramble extends GameSystem {
         }
     }
 
+    public void setAnswerSubmitted(boolean answerSubmitted) {
+        this.answerSubmitted = answerSubmitted;
+    }
+
+    public boolean getAnswerSubmitted() {
+        return answerSubmitted;
+    }
 }

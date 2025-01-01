@@ -10,10 +10,10 @@ public class ScrambleTaskTimers {
     public Integer taskId1;
     public Integer taskId2;
 
-    ChatGames wordScramblerPlugin = ChatGames.getPlugin();
+    ChatGames plugin = ChatGames.getPlugin();
     FileConfiguration config = ChatGames.getPlugin().getConfig();
 
-    Scramble scramble = new Scramble();
+    Scramble scramble = plugin.scramble;
 
     public void startCountdownOne() {
         taskId1 = Bukkit.getScheduler().scheduleSyncRepeatingTask(ChatGames.getPlugin(), new Runnable() {

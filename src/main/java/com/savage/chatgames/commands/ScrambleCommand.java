@@ -14,9 +14,9 @@ import org.bukkit.entity.Player;
 import java.util.logging.Logger;
 
 public class ScrambleCommand implements CommandExecutor {
-    Scramble scramble = new Scramble();
 
     ChatGames plugin = ChatGames.getPlugin();
+    Scramble scramble = plugin.scramble;
     ScrambleRewards rewards = new ScrambleRewards();
     FileConfiguration config = plugin.getConfig();
     Logger log = ChatGames.getPlugin().getLogger();

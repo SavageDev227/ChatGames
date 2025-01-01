@@ -1,6 +1,5 @@
 package com.savage.chatgames;
 
-import com.savage.chatgames.commands.ReloadCommand;
 import com.savage.chatgames.commands.ScrambleCommand;
 import com.savage.chatgames.commands.tabCompleter.ScrambleCommandTabCompleter;
 import com.savage.chatgames.games.Scramble;
@@ -8,7 +7,6 @@ import com.savage.chatgames.utils.ColorUtils;
 import com.savage.chatgames.games.taskTimers.ScrambleTaskTimers;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
@@ -17,6 +15,8 @@ public final class ChatGames extends JavaPlugin {
 
     Logger log = this.getLogger();
     private static ChatGames plugin;
+
+    public Scramble scramble = new Scramble();
 
     public ScrambleTaskTimers scrambleTaskTimers;
 

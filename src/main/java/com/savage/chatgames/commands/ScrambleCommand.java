@@ -4,6 +4,7 @@ import com.savage.chatgames.ChatGames;
 import com.savage.chatgames.games.Scramble;
 import com.savage.chatgames.games.rewards.ScrambleRewards;
 import com.savage.chatgames.utils.ColorUtils;
+import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,6 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 public class ScrambleCommand implements CommandExecutor {
@@ -20,6 +22,8 @@ public class ScrambleCommand implements CommandExecutor {
     ScrambleRewards rewards = new ScrambleRewards();
     FileConfiguration config = plugin.getConfig();
     Logger log = ChatGames.getPlugin().getLogger();
+
+    List<String> bannedWords = config.getStringList("blacklisted-words");
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("scramble")) {
@@ -35,6 +39,15 @@ public class ScrambleCommand implements CommandExecutor {
                         p.sendMessage(ColorUtils.translateColorCodes("&cThe answer has already been submitted!\n&bPlease wait for the next puzzle!"));
                         return true;
                     }
+
+                    if(config.getBoolean("enable-autoban")) {
+                        for (String bannedWord : bannedWords) {
+                            if(args[0].equalsIgnoreCase(bannedWord)) {
+                               Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "ban" + p.getName() + "Banned word in scramble answer");
+                            }
+                        }
+                    }
+
                     if (args[1].equalsIgnoreCase(scramble.lastScrambledWord)) {
                         rewards.giveReward(p, scramble.lastScrambledWord);
                         scramble.setAnswerSubmitted(true);

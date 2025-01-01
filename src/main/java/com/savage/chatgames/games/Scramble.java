@@ -30,8 +30,12 @@ public class Scramble extends GameSystem {
     @Override
     public void taskSystem() {
         answerSubmitted = false;
-        String wordToScramble = getRandomWord();
-        String scrambledWord = scramble(wordToScramble.toLowerCase());
+        String wordToScramble;
+        String scrambledWord;
+        do {
+            wordToScramble = getRandomWord();
+            scrambledWord = scramble(wordToScramble);
+        } while(containsBlacklistWords(scrambledWord));
         String scrambleAnnouncement = config.getString("scramble-announcement");
         String scramblePrefix = config.getString("announcement-prefix");
 
@@ -59,6 +63,16 @@ public class Scramble extends GameSystem {
             scrambledWord = new String(chars);
         } while (scrambledWord.equals(word));
         return scrambledWord;
+    }
+
+    public boolean containsBlacklistWords(String word) {
+        List<String> bannedWords = config.getStringList("blacklisted-words:");
+        for(String bannedWord : bannedWords) {
+            if(word.contains(bannedWord)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private String getRandomWord() {

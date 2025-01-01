@@ -13,10 +13,10 @@ import java.util.logging.Logger;
 
 public final class ChatGames extends JavaPlugin {
 
-    Logger log = this.getLogger();
-    private static ChatGames plugin;
 
-    public Scramble scramble = new Scramble();
+    private static ChatGames plugin;
+    private final Logger log = getLogger();
+    public Scramble scramble; // Remove immediate initialization
 
     public ScrambleTaskTimers scrambleTaskTimers;
 
@@ -30,6 +30,8 @@ public final class ChatGames extends JavaPlugin {
         // Plugin startup logic
         plugin = this;
 
+        scramble = new Scramble();
+
         // Load the configuration
         getConfig().options().copyDefaults(true);
         saveConfig();
@@ -42,9 +44,9 @@ public final class ChatGames extends JavaPlugin {
 
         // Plugin startup message
         log.info(ColorUtils.translateColorCodes("-------------------------------------------"));
-        log.info(ColorUtils.translateColorCodes("&6WordScrambler: &3Plugin by: &b&lSavageDev & Loving11ish"));
-        log.info(ColorUtils.translateColorCodes("&6WordScrambler: &3has been loaded successfully"));
-        log.info(ColorUtils.translateColorCodes("&6WordScrambler: &3Plugin Version: &d&l" + pluginVersion));
+        log.info("§6ChatGames: §cPlugin by: §c§lSavageDev");
+        log.info(ColorUtils.translateColorCodes("§6ChatGames: §ahas been loaded successfully"));
+        log.info("§6ChatGames: §aPlugin Version: §e§l" + pluginVersion);
         log.info(ColorUtils.translateColorCodes("-------------------------------------------"));
 
         // Schedule first word
@@ -63,9 +65,9 @@ public final class ChatGames extends JavaPlugin {
 
         // Plugin shutdown message
         log.info(ColorUtils.translateColorCodes("-------------------------------------------"));
-        log.info(ColorUtils.translateColorCodes("&6WordScrambler: &3Plugin by: &b&lSavageDev"));
-        log.info(ColorUtils.translateColorCodes("&6WordScrambler: &3has been disabled successfully"));
-        log.info(ColorUtils.translateColorCodes("&6WordScrambler: &3Plugin Version: &d&l" + pluginVersion));
+        log.info("§6ChatGames: §cPlugin by: &c&lSavageDev");
+        log.info("§6ChatGames: §chas been disabled successfully");
+        log.info("§6ChatGames: §cPlugin Version: &d&l" + pluginVersion);
         log.info(ColorUtils.translateColorCodes("-------------------------------------------"));
     }
 
@@ -82,10 +84,10 @@ public final class ChatGames extends JavaPlugin {
                 Bukkit.getScheduler().cancelTask(scrambleTaskTimers.taskId2);
             }
             log.info(ColorUtils.translateColorCodes("-------------------------------------------"));
-            log.info(ColorUtils.translateColorCodes("&6WordScrambler: &3Stopped Scramble Timers"));
+            log.info(ColorUtils.translateColorCodes("§6ChatGames: §cStopped Scramble Timers"));
         } catch (Exception e) {
-            log.info(ColorUtils.translateColorCodes("-------------------------------------------"));
-            log.info(ColorUtils.translateColorCodes("&6WordScrambler: &3Stopped Scramble Timers"));
+            log.info("-------------------------------------------");
+            log.info("§6ChatGames: §cStopped Scramble Timers");
         }
 
     }

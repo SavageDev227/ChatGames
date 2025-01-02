@@ -27,50 +27,52 @@ public class ScrambleCommand implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("scramble")) {
-            if(sender instanceof Player) {
-                Player p = (Player) sender;
-                // check if answer is correct
-                if (args.length == 2 && args[0].equals("answer")) {
-                    if (args[1] == null) {
-                        p.sendMessage(ColorUtils.translateColorCodes("&cWrong syntax!"));
-                        return true;
-                    }
-                    if (scramble.answerSubmitted) {
-                        p.sendMessage(ColorUtils.translateColorCodes("&cThe answer has already been submitted!\n&bPlease wait for the next puzzle!"));
-                        return true;
-                    }
-
-                    if(config.getBoolean("enable-autoban")) {
-                        for (String bannedWord : bannedWords) {
-                            if(args[0].equalsIgnoreCase(bannedWord)) {
-                               Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "ban" + p.getName() + "Banned word in scramble answer");
-                            }
-                        }
-                    }
-
-                    if (args[1].equalsIgnoreCase(scramble.lastScrambledWord)) {
-                        rewards.giveReward(p, scramble.lastScrambledWord);
-                        scramble.setAnswerSubmitted(true);
-                        String unscrambleAnnouncement = config.getString("scramble-answer");
-                        String scramblePrefix = config.getString("announcement-prefix");
-
-                        // Replace placeholders with actual values
-                        if (unscrambleAnnouncement != null) {
-                            unscrambleAnnouncement = unscrambleAnnouncement.replace("%scramble-prefix%", scramblePrefix != null ? scramblePrefix : "");
-                            unscrambleAnnouncement = unscrambleAnnouncement.replace("%unscrambled-word%", scramble.lastScrambledWord);
-                            unscrambleAnnouncement = unscrambleAnnouncement.replace("%player%", p.getName());
-
-                            // Broadcast the message
-                            Bukkit.broadcastMessage(ColorUtils.translateColorCodes(unscrambleAnnouncement));
-                        }
-                    } else {
-                        p.sendMessage(ColorUtils.translateColorCodes("&cWrong answer! Try again."));
-                    }
-                    return true;
-                } else {
-                    sender.sendMessage(ColorUtils.translateColorCodes("&cWrong answer or syntax"));
+            if(!(sender instanceof Player)) {
+                sender.sendMessage(ColorUtils.translateColorCodes("&cThis must be run by a player"));
+                return true;
+            }
+            Player p = (Player) sender;
+            // check if answer is correct
+            if (args.length == 2 && args[0].equals("answer")) {
+                if (args[1] == null) {
+                    p.sendMessage(ColorUtils.translateColorCodes("&cWrong syntax!"));
                     return true;
                 }
+                if (scramble.answerSubmitted) {
+                    p.sendMessage(ColorUtils.translateColorCodes("&cThe answer has already been submitted!\n&bPlease wait for the next puzzle!"));
+                    return true;
+                }
+
+                if(config.getBoolean("enable-autoban")) {
+                    for (String bannedWord : bannedWords) {
+                        if(args[0].equalsIgnoreCase(bannedWord)) {
+                            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "ban" + p.getName() + "Banned word in scramble answer");
+                        }
+                    }
+                }
+
+                if (args[1].equalsIgnoreCase(scramble.lastScrambledWord)) {
+                    rewards.giveReward(p, scramble.lastScrambledWord);
+                    scramble.setAnswerSubmitted(true);
+                    String unscrambleAnnouncement = config.getString("scramble-answer");
+                    String scramblePrefix = config.getString("prefix");
+
+                    // Replace placeholders with actual values
+                    if (unscrambleAnnouncement != null) {
+                        unscrambleAnnouncement = unscrambleAnnouncement.replace("%prefix%", scramblePrefix != null ? scramblePrefix : "");
+                        unscrambleAnnouncement = unscrambleAnnouncement.replace("%unscrambled-word%", scramble.lastScrambledWord);
+                        unscrambleAnnouncement = unscrambleAnnouncement.replace("%player%", p.getName());
+
+                        // Broadcast the message
+                        Bukkit.broadcastMessage(ColorUtils.translateColorCodes(unscrambleAnnouncement));
+                    }
+                } else {
+                    p.sendMessage(ColorUtils.translateColorCodes("&cWrong answer! Try again."));
+                }
+                return true;
+            } else {
+                sender.sendMessage(ColorUtils.translateColorCodes("&cWrong answer or syntax"));
+                return true;
             }
         }
         return false;

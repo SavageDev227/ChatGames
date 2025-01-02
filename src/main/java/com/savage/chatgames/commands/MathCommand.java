@@ -25,11 +25,11 @@ public class MathCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         Player p = (Player) sender;
-        if(!(sender instanceof Player)) {
-            sender.sendMessage(ColorUtils.translateColorCodes("&cThis must be run by a player"));
-            return true;
-        }
         if(cmd.getName().equalsIgnoreCase("math")) {
+            if(!(sender instanceof Player)) {
+                sender.sendMessage(ColorUtils.translateColorCodes("&cThis must be run by a player"));
+                return true;
+            }
             if(args.length == 2 && args[0].equals("answer")) {
                 if(args.length == 2 && args[1] == null) {
                     p.sendMessage(ColorUtils.translateColorCodes("&cWrong Syntax!"));
@@ -43,20 +43,26 @@ public class MathCommand implements CommandExecutor {
                 if(args[1].equalsIgnoreCase(String.valueOf(result))) {
                     rewards.giveReward(p);
                     math.setAnswerSubmitted(true);
-                    String unscrambleAnnouncement = config.getString("scramble-answer");
-                    String scramblePrefix = config.getString("announcement-prefix");
+                    String solveAnnouncement = config.getString("math-answer");
+                    String mathPrefix = config.getString("prefix");
 
                     // Replace placeholders with actual values
                     //TODO: Replace placeholders
-                    if (unscrambleAnnouncement != null) {
-                        unscrambleAnnouncement = unscrambleAnnouncement.replace("%scramble-prefix%", scramblePrefix != null ? scramblePrefix : "");
-                        unscrambleAnnouncement = unscrambleAnnouncement.replace("%unscrambled-word%", String.valueOf(result));
-                        unscrambleAnnouncement = unscrambleAnnouncement.replace("%player%", p.getName());
+                    if (solveAnnouncement != null) {
+                        solveAnnouncement = solveAnnouncement.replace("%scramble-prefix%", mathPrefix != null ? mathPrefix : "");
+                        solveAnnouncement = solveAnnouncement.replace("%unscrambled-word%", String.valueOf(result));
+                        solveAnnouncement = solveAnnouncement.replace("%player%", p.getName());
 
                         // Broadcast the message
-                        Bukkit.broadcastMessage(ColorUtils.translateColorCodes(unscrambleAnnouncement));
+                        Bukkit.broadcastMessage(ColorUtils.translateColorCodes(solveAnnouncement));
                     }
+                } else {
+                    p.sendMessage(ColorUtils.translateColorCodes("&cWrong answer! Try again."));
+                    return true;
                 }
+            } else {
+                sender.sendMessage(ColorUtils.translateColorCodes("&cWrong answer or syntax"));
+                return true;
             }
         }
         return false;

@@ -1,6 +1,7 @@
 package com.savage.chatgames.games.taskTimers;
 
 import com.savage.chatgames.ChatGames;
+import com.savage.chatgames.games.Math;
 import com.savage.chatgames.games.Scramble;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -14,6 +15,7 @@ public class TaskTimers {
     FileConfiguration config = ChatGames.getPlugin().getConfig();
 
     Scramble scramble = plugin.scramble;
+    Math math = plugin.math;
 
     public void startCountdownOne() {
         taskId1 = Bukkit.getScheduler().scheduleSyncRepeatingTask(ChatGames.getPlugin(), new Runnable() {
@@ -40,7 +42,7 @@ public class TaskTimers {
             @Override
             public void run() {
                 if (time == 0){
-                    scramble.taskSystem();
+                    math.taskSystem();
                     startCountdownOne();
                     Bukkit.getScheduler().cancelTask(taskId2);
                     return;

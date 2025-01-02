@@ -67,14 +67,6 @@ public class ScrambleCommand implements CommandExecutor {
                         p.sendMessage(ColorUtils.translateColorCodes("&cWrong answer! Try again."));
                     }
                     return true;
-                } else if (args.length == 1 && args[0].equals("start") && p.hasPermission("scramble.staff")) {
-                    scramble.stopCountdown();
-                    scramble.scrambleTaskTimers.startCountdownOne();
-                    log.info(String.format("[%s] - Started Scramble Timers", plugin.getDescription().getName()));
-                    p.sendMessage(ColorUtils.translateColorCodes("&cScramble countdown started!"));
-                } else if (args.length == 1 && args[0].equals("stop") && p.hasPermission("scramble.staff")) {
-                    scramble.stopCountdown();
-                    p.sendMessage(ColorUtils.translateColorCodes("&cScramble countdown stopped!"));
                 } else {
                     sender.sendMessage(ColorUtils.translateColorCodes("&cWrong answer or syntax"));
                     return true;

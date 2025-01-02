@@ -1,7 +1,7 @@
 package com.savage.chatgames.commands;
 
 import com.savage.chatgames.ChatGames;
-import com.savage.chatgames.games.taskTimers.ScrambleTaskTimers;
+import com.savage.chatgames.games.taskTimers.TaskTimers;
 import com.savage.chatgames.utils.ColorUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 public class ReloadCommand implements CommandExecutor {
    ChatGames plugin = ChatGames.getPlugin();
 
-   public ScrambleTaskTimers taskTimers;
+   public TaskTimers taskTimers;
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

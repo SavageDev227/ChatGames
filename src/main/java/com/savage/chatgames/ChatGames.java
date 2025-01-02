@@ -2,9 +2,10 @@ package com.savage.chatgames;
 
 import com.savage.chatgames.commands.ScrambleCommand;
 import com.savage.chatgames.commands.tabCompleter.ScrambleCommandTabCompleter;
+import com.savage.chatgames.games.Math;
 import com.savage.chatgames.games.Scramble;
 import com.savage.chatgames.utils.ColorUtils;
-import com.savage.chatgames.games.taskTimers.ScrambleTaskTimers;
+import com.savage.chatgames.games.taskTimers.TaskTimers;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,7 +19,9 @@ public final class ChatGames extends JavaPlugin {
     private final Logger log = getLogger();
     public Scramble scramble; // Remove immediate initialization
 
-    public ScrambleTaskTimers scrambleTaskTimers;
+    public Math math;
+
+    public TaskTimers scrambleTaskTimers;
 
     private final PluginDescriptionFile pluginInfo = getDescription();
 
@@ -32,12 +35,14 @@ public final class ChatGames extends JavaPlugin {
 
         scramble = new Scramble();
 
+        math = new Math();
+
         // Load the configuration
         getConfig().options().copyDefaults(true);
         saveConfig();
 
         // Schedule the task to send messages
-        scrambleTaskTimers = new ScrambleTaskTimers();
+        scrambleTaskTimers = new TaskTimers();
 
         getCommand("scramble").setExecutor(new ScrambleCommand());
         getCommand("scramble").setTabCompleter(new ScrambleCommandTabCompleter());

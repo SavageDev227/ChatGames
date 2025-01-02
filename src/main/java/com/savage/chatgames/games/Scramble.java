@@ -3,7 +3,7 @@ package com.savage.chatgames.games;
 import com.savage.chatgames.ChatGames;
 import com.savage.chatgames.utils.ColorUtils;
 import com.savage.chatgames.utils.GameSystem;
-import com.savage.chatgames.games.taskTimers.ScrambleTaskTimers;
+import com.savage.chatgames.games.taskTimers.TaskTimers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -15,13 +15,8 @@ import java.util.logging.Logger;
 public class Scramble extends GameSystem {
 
     public boolean answerSubmitted = false;
-
-    public ScrambleTaskTimers scrambleTaskTimers;
-
     public ChatGames plugin = ChatGames.getPlugin();
-
     Logger log = plugin.getLogger();
-
     public String lastScrambledWord;
     List<String> wordsToScramble = plugin.getConfig().getStringList("words-to-scramble");
     FileConfiguration config = ChatGames.getPlugin().getConfig();
@@ -37,10 +32,10 @@ public class Scramble extends GameSystem {
             scrambledWord = scramble(wordToScramble);
         } while(containsBlacklistWords(scrambledWord));
         String scrambleAnnouncement = config.getString("scramble-announcement");
-        String scramblePrefix = config.getString("announcement-prefix");
+        String scramblePrefix = config.getString("prefix");
 
         // Replace placeholders with actual values
-        scrambleAnnouncement = scrambleAnnouncement.replace("%scramble-prefix%", scramblePrefix);
+        scrambleAnnouncement = scrambleAnnouncement.replace("%prefix%", scramblePrefix);
         scrambleAnnouncement = scrambleAnnouncement.replace("%scrambled-word%", scrambledWord);
 
         // Broadcast the message
@@ -81,22 +76,6 @@ public class Scramble extends GameSystem {
         }
         int randomIndex = new Random().nextInt(wordsToScramble.size());
         return wordsToScramble.get(randomIndex);
-    }
-
-    public void stopCountdown() {
-        try {
-            if (Bukkit.getScheduler().isCurrentlyRunning(scrambleTaskTimers.taskId1)||Bukkit.getScheduler().isQueued(scrambleTaskTimers.taskId1)){
-                Bukkit.getScheduler().cancelTask(scrambleTaskTimers.taskId1);
-            }
-            if (Bukkit.getScheduler().isCurrentlyRunning(scrambleTaskTimers.taskId2)||Bukkit.getScheduler().isQueued(scrambleTaskTimers.taskId2)){
-                Bukkit.getScheduler().cancelTask(scrambleTaskTimers.taskId2);
-            }
-            log.info(ColorUtils.translateColorCodes("-------------------------------------------"));
-            log.info(ColorUtils.translateColorCodes("&6ChatGames: &3Stopped Scramble Timers"));
-        } catch (Exception e) {
-            log.info(ColorUtils.translateColorCodes("-------------------------------------------"));
-            log.info(ColorUtils.translateColorCodes("&6ChatGames: &3Stopped Scramble Timers"));
-        }
     }
 
     public void setAnswerSubmitted(boolean answerSubmitted) {

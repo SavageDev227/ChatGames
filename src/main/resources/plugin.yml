@@ -11,3 +11,6 @@ commands:
   reloadchatgames:
     description: reloads the command
     permission: scramble.reload
+  math:
+    description: Interacts with the math minigame
+    aliases: scrbl

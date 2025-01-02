@@ -21,7 +21,7 @@ public class TaskTimers {
         taskId1 = Bukkit.getScheduler().scheduleSyncRepeatingTask(ChatGames.getPlugin(), new Runnable() {
 
             // Time in seconds in between each scramble
-            int time = 600;
+            int time = (config.getInt("time-between-games") * 60);
             @Override
             public void run() {
                 if (time == 0) {
@@ -38,7 +38,7 @@ public class TaskTimers {
 
     public void startCountdownTwo(){
         taskId2 = Bukkit.getScheduler().scheduleSyncRepeatingTask(ChatGames.getPlugin(), new Runnable() {
-            int time = 600;
+            int time = (config.getInt("time-between-games") * 60);
             @Override
             public void run() {
                 if (time == 0){

@@ -47,10 +47,9 @@ public class MathCommand implements CommandExecutor {
                     String mathPrefix = config.getString("prefix");
 
                     // Replace placeholders with actual values
-                    //TODO: Replace placeholders
                     if (solveAnnouncement != null) {
-                        solveAnnouncement = solveAnnouncement.replace("%scramble-prefix%", mathPrefix != null ? mathPrefix : "");
-                        solveAnnouncement = solveAnnouncement.replace("%unscrambled-word%", String.valueOf(result));
+                        solveAnnouncement = solveAnnouncement.replace("%prefix%", mathPrefix != null ? mathPrefix : "");
+                        solveAnnouncement = solveAnnouncement.replace("%solution%", String.valueOf(result));
                         solveAnnouncement = solveAnnouncement.replace("%player%", p.getName());
 
                         // Broadcast the message
@@ -61,7 +60,7 @@ public class MathCommand implements CommandExecutor {
                     return true;
                 }
             } else {
-                sender.sendMessage(ColorUtils.translateColorCodes("&cWrong answer or syntax"));
+                sender.sendMessage(ColorUtils.translateColorCodes("&cWrong syntax"));
                 return true;
             }
         }

@@ -1,6 +1,8 @@
 package com.savage.chatgames;
 
+import com.savage.chatgames.commands.MathCommand;
 import com.savage.chatgames.commands.ScrambleCommand;
+import com.savage.chatgames.commands.tabCompleter.MathCommandTabCompleter;
 import com.savage.chatgames.commands.tabCompleter.ScrambleCommandTabCompleter;
 import com.savage.chatgames.games.Math;
 import com.savage.chatgames.games.Scramble;
@@ -46,6 +48,8 @@ public final class ChatGames extends JavaPlugin {
 
         getCommand("scramble").setExecutor(new ScrambleCommand());
         getCommand("scramble").setTabCompleter(new ScrambleCommandTabCompleter());
+        getCommand("math").setExecutor(new MathCommand());
+        getCommand("math").setTabCompleter(new MathCommandTabCompleter());
 
         // Plugin startup message
         log.info(ColorUtils.translateColorCodes("-------------------------------------------"));

@@ -10,7 +10,7 @@ commands:
     aliases: scrbl
   reloadchatgames:
     description: reloads the command
-    permission: scramble.reload
+    permission: chatgames.reload
   math:
     description: Interacts with the math minigame
     aliases: scrbl

@@ -10,19 +10,20 @@ import java.util.Random;
 
 public class Math extends GameSystem {
 
-    public int difficulty;
+    public Integer difficulty;
 
     public boolean answerSubmitted = false;
     public ChatGames plugin = ChatGames.getPlugin();
     FileConfiguration config = ChatGames.getPlugin().getConfig();
 
-    public int result;
+    public Integer result;
+
     @Override
     public void taskSystem() {
         answerSubmitted = false;
 
         String problem = generateMathProblem();
-        String mathAnnouncement = config.getString("scramble-announcement");
+        String mathAnnouncement = config.getString("math-announcement");
         String mathPrefix = config.getString("prefix");
 
         // Replace placeholders with actual values

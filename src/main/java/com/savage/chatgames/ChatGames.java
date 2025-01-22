@@ -23,6 +23,8 @@ public final class ChatGames extends JavaPlugin {
 
     public Math math;
 
+    public int result;
+
     public TaskTimers scrambleTaskTimers;
 
     private final PluginDescriptionFile pluginInfo = getDescription();

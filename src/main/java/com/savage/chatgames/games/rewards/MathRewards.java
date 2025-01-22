@@ -11,10 +11,8 @@ public class MathRewards {
 
     ChatGames plugin = ChatGames.getPlugin();
     Math math = plugin.math;
-
-    Integer diff = math.difficulty;
     FileConfiguration config = ChatGames.getPlugin().getConfig();
-    public void giveReward(Player player) {
+    public void giveReward(Player player, int diff) {
         int reward = 0;
         String easycmd = "eco give " + player.getName() + " " + config.getInt("reward-short");
         String hardcmd = "eco give " + player.getName() + " " + config.getInt("reward-medium");

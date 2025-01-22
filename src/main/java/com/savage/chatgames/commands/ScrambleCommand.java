@@ -51,7 +51,7 @@ public class ScrambleCommand implements CommandExecutor {
                     }
                 }
 
-                if (args[1].equalsIgnoreCase(scramble.lastScrambledWord)) {
+                if (args[1].equalsIgnoreCase(scramble.lastScrambledWord.toLowerCase())) {
                     rewards.giveReward(p, scramble.lastScrambledWord);
                     scramble.setAnswerSubmitted(true);
                     String unscrambleAnnouncement = config.getString("scramble-answer");

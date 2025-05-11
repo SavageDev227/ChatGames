@@ -15,10 +15,8 @@ public class MathCommand implements CommandExecutor {
 
     ChatGames plugin = ChatGames.getPlugin();
     Math math = plugin.math;
-    Integer result = math.result;
     FileConfiguration config = plugin.getConfig();
     MathRewards rewards = new MathRewards();
-    Integer diff = math.difficulty;
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -38,8 +36,8 @@ public class MathCommand implements CommandExecutor {
                     return true;
                 }
 
-                if(args[1].equalsIgnoreCase(Integer.toString(result))) {
-                    rewards.giveReward(p, diff);
+                if(args[1].equalsIgnoreCase(Integer.toString(math.result))) {
+                    rewards.giveReward(p, math.difficulty);
                     math.setAnswerSubmitted(true);
                     String solveAnnouncement = config.getString("math-answer");
                     String mathPrefix = config.getString("prefix");
@@ -47,7 +45,7 @@ public class MathCommand implements CommandExecutor {
                     // Replace placeholders with actual values
                     if (solveAnnouncement != null) {
                         solveAnnouncement = solveAnnouncement.replace("%prefix%", mathPrefix != null ? mathPrefix : "");
-                        solveAnnouncement = solveAnnouncement.replace("%solution%", Integer.toString(result));
+                        solveAnnouncement = solveAnnouncement.replace("%solution%", Integer.toString(math.result));
                         solveAnnouncement = solveAnnouncement.replace("%player%", p.getName());
 
                         // Broadcast the message

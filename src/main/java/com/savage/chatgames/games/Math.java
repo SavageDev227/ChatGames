@@ -53,7 +53,7 @@ public class Math extends GameSystem {
 
         if(operator == '+' || operator == '-') {
             difficulty = 1;
-        } else if(operator == '*' || operator == '/') {
+        } else {
             difficulty = 2;
         }
 
